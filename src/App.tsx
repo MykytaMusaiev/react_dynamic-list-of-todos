@@ -26,6 +26,7 @@ export const App: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>(
     StatusFilter.All,
   );
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadTodos = async () => {
@@ -33,9 +34,11 @@ export const App: React.FC = () => {
         setIsLoading(true);
         const loadedTodos = await getTodos();
 
+        setError(null);
+
         setTodos(loadedTodos);
-      } catch (error) {
-        throw new Error('Failed to load todos:', error);
+      } catch (e) {
+        setError('Failed to load todos');
       } finally {
         setIsLoading(false);
       }
@@ -119,6 +122,7 @@ export const App: React.FC = () => {
                   selectedTodo={selectedTodo}
                 />
               )}
+              {error && <p className="error">{error}</p>}
             </div>
           </div>
         </div>
