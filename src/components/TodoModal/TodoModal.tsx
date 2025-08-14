@@ -12,11 +12,15 @@ interface Props {
 export const TodoModal: React.FC<Props> = ({ onClick, todo }) => {
   const [isModalLoading, setIsModalLoading] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!todo) {
       return;
     }
+
+    setUser(null);
+    setError(null);
 
     const loadUser = async () => {
       try {
@@ -24,8 +28,8 @@ export const TodoModal: React.FC<Props> = ({ onClick, todo }) => {
         const loadedUser = await getUser(todo.userId);
 
         setUser(loadedUser);
-      } catch (error) {
-        throw new Error('no user data');
+      } catch (e) {
+        setError('Failed to load user details');
       } finally {
         setIsModalLoading(false);
       }
@@ -38,9 +42,10 @@ export const TodoModal: React.FC<Props> = ({ onClick, todo }) => {
     <div className="modal is-active" data-cy="modal">
       <div className="modal-background" />
 
-      {isModalLoading ? (
-        <Loader />
-      ) : (
+      {isModalLoading && <Loader />}
+      {error && <p className="has-text-danger">{error}</p>}
+
+      {!isModalLoading && !error && user && (
         <div className="modal-card">
           <header className="modal-card-head">
             <div

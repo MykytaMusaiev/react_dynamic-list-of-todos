@@ -50,7 +50,6 @@ export const App: React.FC = () => {
   const handleModalOpen = (todo: Todo) => {
     if (todo) {
       setSelectedTodo(todo);
-      // console.log(`handleModal; state:currentUserId ${currentUserId}`);
     }
 
     setIsModalOpen(true);
@@ -118,7 +117,7 @@ export const App: React.FC = () => {
               ) : (
                 <TodoList
                   todos={visibleTodos}
-                  onClick={handleModalOpen}
+                  openModal={handleModalOpen}
                   selectedTodo={selectedTodo}
                 />
               )}
