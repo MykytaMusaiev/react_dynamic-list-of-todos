@@ -22,7 +22,7 @@ function get<T>(url: string): Promise<T> {
     .then(() => fetch(fullURL))
     .then(res => {
       if (!res.ok) {
-        throw new Error('Failed to fetch');
+        throw new Error('Failed to fetch!');
       }
 
       return res.json();

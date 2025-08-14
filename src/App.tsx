@@ -38,7 +38,7 @@ export const App: React.FC = () => {
 
         setTodos(loadedTodos);
       } catch (e) {
-        setError('Failed to load todos');
+        setError('Failed to load todos!');
       } finally {
         setIsLoading(false);
       }
